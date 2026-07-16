@@ -413,7 +413,7 @@ export default function FormAnalytics() {
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={({ device, count }) => `${device}: ${count}`}
+                      label={(props: any) => `${props.device}: ${props.count}`}
                       outerRadius={80}
                       fill={CHART_COLORS[0]}
                       dataKey="count"

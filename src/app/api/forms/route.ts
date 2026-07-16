@@ -18,16 +18,11 @@ export async function GET() {
       .sort({ createdAt: -1 })
       .lean();
 
-    // Get response counts and analytics for each form
+    // Get response counts for each form
     const formsWithCounts = await Promise.all(
       forms.map(async (form) => {
         const responseCount = await FormResponse.countDocuments({
           formId: form._id,
-        });
-
-        // Update analytics if needed
-        await Form.findByIdAndUpdate(form._id, {
-          "analytics.totalSubmissions": responseCount,
         });
 
         return {
@@ -173,11 +168,6 @@ export async function POST(request: NextRequest) {
       userId: session.user.id,
       fields: processedFields,
       settings: processedSettings,
-      analytics: {
-        totalViews: 0,
-        totalSubmissions: 0,
-        conversionRate: 0,
-      },
     });
 
     return NextResponse.json({ form }, { status: 201 });
